@@ -2,9 +2,10 @@
 :cat: Detecting and mapping cat faces.
 
 ## Usage
-./detectCatFaces.py
+detectCatFaces.py -i <path/to/inputCatImg.jpg>
 
 ```
+detectCatFaces.py -i data/mimi.jpg
 ```
 
 ## Requirements
