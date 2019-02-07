@@ -6,19 +6,15 @@ Use the built-in functionality in OpenCV to detect cat faces.
 import sys
 import getopt
 import cv2
+from components.cat_frontal_face_detection import detect_cat_face
 
 EXPECTED_NUM_INPUTS = 1
 
 
 def exit_error():
     print('Error: unexpected arguments')
-    print('detectCatFaces.py -i <path/to/inputCatImg.jpg>')
+    print('detect_cat_faces.py -i <path/to/inputCatImg.jpg>')
     sys.exit()
-
-
-def detect_cat_face(img):
-    # TODO
-    return
 
 
 def main(argv):
@@ -42,10 +38,7 @@ def main(argv):
 
     cat_img = cv2.imread(in_img)
 
-    cv2.imshow("Cat image: ", cat_img)
-    cv2.waitKey(0)
-
-    cv2.destroyAllWindows()
+    detect_cat_face(cat_img)
 
 
 if __name__ == "__main__":
