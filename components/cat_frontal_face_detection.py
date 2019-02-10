@@ -59,10 +59,10 @@ def detect_cat_face(img):
 
     # TODO: currently testing a human facial landmark detector on the cat faces,
     #       will probably need to train a new landmark detector
-    for face in face_bounding_boxes:
-        # TODO: need to convert face to the form: rectangles[[(241, 170) (562, 491)]]
-        landmarks = landmarks_predictor(img, face)
-        facial_landmark_points.append(landmarks_to_numpy(landmarks))
+    # for face in face_bounding_boxes:
+    # TODO: need to convert face to the form: rectangles[[(241, 170) (562, 491)]]
+    # landmarks = landmarks_predictor(img, cv_face)
+    # facial_landmark_points.append(landmarks_to_numpy(landmarks))
 
     if debug_cat_frontal_face_detection:
         show_detected_faces(img, face_bounding_boxes, facial_landmark_points)

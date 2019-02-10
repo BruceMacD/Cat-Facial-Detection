@@ -1,5 +1,8 @@
 # Cat-Facial-Detection
 :cat: Detecting and mapping cat faces.
+Check out the related Kaggle kernel for the data set and model training:
+
+https://www.kaggle.com/brucemacd/cat-landmark-detector
 
 ## Usage
 detect_cat_faces.py -i <path/to/inputCatImg.jpg>
@@ -15,6 +18,10 @@ detect_cat_faces.py -i data/mimi.jpg
 * Python 3
 
 ## Sources
+Cat data set
+
+https://www.kaggle.com/crawford/cat-dataset
+
 Detecting cats in images with OpenCV
 
 https://www.pyimagesearch.com/2016/06/20/detecting-cats-in-images-with-opencv/
