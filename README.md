@@ -1,5 +1,6 @@
 # Cat-Facial-Detection
 :cat: Detecting and mapping cat faces.
+
 Check out the related Kaggle kernel for the data set and model training:
 
 https://www.kaggle.com/brucemacd/cat-landmark-detector
