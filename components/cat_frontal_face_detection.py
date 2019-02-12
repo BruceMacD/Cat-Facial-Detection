@@ -75,4 +75,4 @@ def detect_cat_face(img):
     if debug_cat_frontal_face_detection:
         show_detected_faces(img, face_bounding_boxes, facial_landmark_points)
 
-    return face_bounding_boxes
+    return face_bounding_boxes, facial_landmark_points
