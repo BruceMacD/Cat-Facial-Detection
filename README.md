@@ -1,4 +1,6 @@
 # Cat-Facial-Detection
+![facial landmarks sample](https://raw.githubusercontent.com/BruceMacD/Cat-Facial-Detection/master/data/sample_output.png)
+
 :cat: Detecting and mapping cat faces.
 
 
