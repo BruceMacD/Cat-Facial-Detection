@@ -14,6 +14,17 @@ DETECTOR = 'data/cat_face_detector.svm'
 # Pre-trained shape predictor from iBUG 300-W dataset for human facial landmarks
 SHAPE_PREDICTOR = 'data/cat_landmark_predictor.dat'
 
+# finds landmarks in the form (from viewer perspective):
+# index - (x,y)
+MOUTH_INDEX = 0
+LEFT_EYE_INDEX = 1
+LEFT_EAR_LEFT_INDEX = 2
+RIGHT_EAR_LEFT_INDEX = 3
+NOSE_INDEX = 4
+RIGHT_EYE_INDEX = 5
+LEFT_EAR_RIGHT_INDEX = 6
+RIGHT_EAR_RIGHT_INDEX = 7
+
 detector = dlib.fhog_object_detector(DETECTOR)
 landmarks_predictor = dlib.shape_predictor(SHAPE_PREDICTOR)
 
@@ -40,6 +51,16 @@ def show_detected_faces(img, bounding_boxes, facial_landmark_points):
             for x, y in landmark_set:
                 cv2.circle(img, (x, y), 1, (0, 0, 255), -1)
 
+        # mouth = facial_landmark_points[0][8]
+        # left_eye = facial_landmark_points[0][1]
+        # nose = facial_landmark_points[0][4]
+        # right_eye = facial_landmark_points[0][5]
+
+        # cv2.circle(img, tuple(mouth), 1, (0, 0, 255), -1)
+        # cv2.circle(img, tuple(left_eye), 1, (0, 0, 255), -1)
+        # cv2.circle(img, tuple(nose), 1, (0, 0, 255), -1)
+        # cv2.circle(img, tuple(right_eye), 1, (0, 0, 255), -1)
+
         # show the output image with the face detections + facial landmarks
         cv2.imshow("Output", img)
         cv2.waitKey(0)
@@ -49,15 +70,28 @@ def show_detected_faces(img, bounding_boxes, facial_landmark_points):
 # conversion from imutils
 def landmarks_to_numpy(landmarks):
     # initialize the matrix of (x, y)-coordinates with a row for each landmark
-    coords = np.zeros((landmarks.num_parts, 2), dtype=int)
+    coords = np.zeros((len(landmarks), 2), dtype=int)
 
     # convert each landmark to (x, y)
-    for i in range(0, landmarks.num_parts):
-        coords[i] = (landmarks.part(i).x, landmarks.part(i).y)
-        coords[i] = (landmarks.part(i).x, landmarks.part(i).y)
+    for i in range(0, len(landmarks)):
+        coords[i] = (landmarks[i][0], landmarks[i][1])
 
     # return the array of (x, y)-coordinates
     return coords
+
+
+def add_inferred_landmarks(landmark_list):
+    # append extra inferred points to improve mask
+    nose = landmark_list[NOSE_INDEX]
+    left_ear = landmark_list[LEFT_EAR_LEFT_INDEX]
+    right_ear = landmark_list[RIGHT_EAR_RIGHT_INDEX]
+
+    # left_cheek = (left_ear.x, mouth.y)
+    left_cheek = (left_ear[0], nose[1])
+    right_cheek = (right_ear[0], nose[1])
+
+    landmark_list.append(left_cheek)
+    landmark_list.append(right_cheek)
 
 
 def detect_cat_face(img):
@@ -70,7 +104,14 @@ def detect_cat_face(img):
 
     for face in face_bounding_boxes:
         landmarks = landmarks_predictor(img, face)
-        facial_landmark_points.append(landmarks_to_numpy(landmarks))
+
+        landmark_list = []
+        for i in range(0, landmarks.num_parts):
+            landmark_list.append((landmarks.part(i).x, landmarks.part(i).y))
+
+        add_inferred_landmarks(landmark_list)
+
+        facial_landmark_points.append(landmarks_to_numpy(landmark_list))
 
     if debug_cat_frontal_face_detection:
         show_detected_faces(img, face_bounding_boxes, facial_landmark_points)
