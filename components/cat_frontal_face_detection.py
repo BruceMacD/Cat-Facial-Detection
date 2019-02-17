@@ -51,16 +51,6 @@ def show_detected_faces(img, bounding_boxes, facial_landmark_points):
             for x, y in landmark_set:
                 cv2.circle(img, (x, y), 1, (0, 0, 255), -1)
 
-        # mouth = facial_landmark_points[0][8]
-        # left_eye = facial_landmark_points[0][1]
-        # nose = facial_landmark_points[0][4]
-        # right_eye = facial_landmark_points[0][5]
-
-        # cv2.circle(img, tuple(mouth), 1, (0, 0, 255), -1)
-        # cv2.circle(img, tuple(left_eye), 1, (0, 0, 255), -1)
-        # cv2.circle(img, tuple(nose), 1, (0, 0, 255), -1)
-        # cv2.circle(img, tuple(right_eye), 1, (0, 0, 255), -1)
-
         # show the output image with the face detections + facial landmarks
         cv2.imshow("Output", img)
         cv2.waitKey(0)
