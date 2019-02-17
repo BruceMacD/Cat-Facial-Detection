@@ -10,6 +10,7 @@ from constants.constants import debug_cat_frontal_face_detection
 
 
 # pre-trained classifier from OpenCV
+HAAR_CLASSIFIER = 'data/haarcascade_frontalcatface.xml'
 DETECTOR = 'data/cat_face_detector.svm'
 # Pre-trained shape predictor from iBUG 300-W dataset for human facial landmarks
 SHAPE_PREDICTOR = 'data/cat_landmark_predictor.dat'
@@ -26,6 +27,7 @@ LEFT_EAR_RIGHT_INDEX = 6
 RIGHT_EAR_RIGHT_INDEX = 7
 
 detector = dlib.fhog_object_detector(DETECTOR)
+haar_detector = dlib.fhog_object_detector(DETECTOR)
 landmarks_predictor = dlib.shape_predictor(SHAPE_PREDICTOR)
 
 
@@ -91,6 +93,13 @@ def detect_cat_face(img):
     grayscale_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     face_bounding_boxes = detector(grayscale_img, 1)
+
+    if len(face_bounding_boxes) == 0:
+        face_bounding_boxes = haar_detector(grayscale_img, 1)
+
+    if len(face_bounding_boxes) == 0:
+        print("no cat face found in input image")
+        exit(0)
 
     for face in face_bounding_boxes:
         landmarks = landmarks_predictor(img, face)
